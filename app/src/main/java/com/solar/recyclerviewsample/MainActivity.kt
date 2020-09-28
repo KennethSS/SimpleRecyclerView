@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import com.solar.recyclerview.ItemListener
+import com.solar.recyclerview.adapter.DataBindingAdapter
 import com.solar.recyclerview.adapter.DataBindingListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -45,8 +46,8 @@ class MainActivity : AppCompatActivity() {
             Food("Courmet combo", "NON-VEG BREAKFAST", R.drawable.item_food_6)
         )
 
-        main_basic_recycler_view.adapter = DataBindingListAdapter(
-            FoodViewModel(), DiffCallback()
+        main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
+            FoodViewModel()
         ).apply {
             submitList(foods)
         }
