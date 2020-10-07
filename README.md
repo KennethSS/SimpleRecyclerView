@@ -17,12 +17,20 @@ allprojects {
     }
 }
 ```
+
 And add a dependency code to your **module**'s `build.gradle` file.
+```gradle
+buildFeatures {
+  dataBinding true
+}
+```
+
 ```gradle
 dependencies {
   implementation 'com.github.KennethSS:SimpleRecyclerView:1.0.3'
 }
 ```
+
 
 ## Usage
 ### Basic Example
