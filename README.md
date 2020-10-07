@@ -20,7 +20,7 @@ allprojects {
 And add a dependency code to your **module**'s `build.gradle` file.
 ```gradle
 dependencies {
-  implementation 'com.github.KennethSS:SimpleRecyclerView:1.0.0'
+  implementation 'com.github.KennethSS:SimpleRecyclerView:1.0.3'
 }
 ```
 
@@ -29,7 +29,7 @@ dependencies {
 ```kotlin
 main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
             FoodViewModel()
-        ).apply {
+       ).apply {
             submitList(foods)
-        }
+       }
 ```
