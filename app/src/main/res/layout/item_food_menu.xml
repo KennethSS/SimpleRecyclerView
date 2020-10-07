@@ -12,10 +12,6 @@
         <variable
             name="vm"
             type="com.solar.recyclerviewsample.FoodViewModel" />
-
-        <variable
-            name="listener"
-            type="com.solar.recyclerview.ItemListener&lt;com.solar.recyclerviewsample.Food>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,11 +23,13 @@
             android:id="@+id/item_food_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:background="@drawable/shape_circle"
             android:layout_marginStart="36dp"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:src="@{item.img}"
             tools:src="@tools:sample/avatars"
+            app:clipOutline="@{true}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -41,13 +39,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="12dp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="18sp"
             android:text="@{item.title}"
             app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintBottom_toTopOf="@id/item_food_subtitle"
             app:layout_constraintStart_toEndOf="@id/item_food_img"
             app:layout_constraintTop_toTopOf="@id/item_food_img"
             tools:text="Luttuce combo" />
@@ -61,8 +58,18 @@
             android:textSize="14sp"
             android:text="@{item.subtitle}"
             app:layout_constraintTop_toBottomOf="@id/item_food_title"
-            app:layout_constraintBottom_toBottomOf="@id/item_food_img"
             app:layout_constraintStart_toStartOf="@id/item_food_title"
             tools:text="Luttuce combo" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="20sp"
+            style="@android:style/Widget.Material"
+            android:text='@{"$ " + item.price}'
+            tools:text="$ 4.79"
+            app:layout_constraintTop_toBottomOf="@id/item_food_subtitle"
+            app:layout_constraintStart_toStartOf="@id/item_food_subtitle"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

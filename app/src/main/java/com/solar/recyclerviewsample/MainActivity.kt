@@ -11,47 +11,17 @@ import com.solar.recyclerview.RecyclerViewPagination
 import com.solar.recyclerview.adapter.DataBindingAdapter
 import com.solar.recyclerview.adapter.DataBindingListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_food_menu.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val foods = mutableListOf(
-            Food("Luttuce combo", "NON-VEG BREAKFAST", R.drawable.item_food_1),
-            Food("Courmet combo", "VEG BREAKFAST", R.drawable.item_food_2),
-            Food("Spaghetti", "VEG BREAKFAST", R.drawable.item_food_3),
-            Food("Fries Combo", "NON-VEG BREAKFAST", R.drawable.item_food_4),
-            Food("Spaghetti combo", "VEG BREAKFAST", R.drawable.item_food_5),
-            Food("Courmet combo", "NON-VEG BREAKFAST", R.drawable.item_food_6),
-            Food("Luttuce combo", "NON-VEG BREAKFAST", R.drawable.item_food_1),
-            Food("Courmet combo", "VEG BREAKFAST", R.drawable.item_food_2),
-            Food("Spaghetti", "VEG BREAKFAST", R.drawable.item_food_3),
-            Food("Fries Combo", "NON-VEG BREAKFAST", R.drawable.item_food_4),
-            Food("Spaghetti combo", "VEG BREAKFAST", R.drawable.item_food_5),
-            Food("Courmet combo", "NON-VEG BREAKFAST", R.drawable.item_food_6)
-        )
-
-        val foods2 = mutableListOf(
-            Food("Luttuce combo", "NON-VEG BREAKFAST", R.drawable.item_food_1),
-            Food("Courmet combo", "VEG BREAKFAST", R.drawable.item_food_2),
-            Food("Spaghetti", "VEG BREAKFAST", R.drawable.item_food_3),
-            Food("Fries Combo", "NON-VEG BREAKFAST", R.drawable.item_food_4),
-            Food("Spaghetti combo", "VEG BREAKFAST", R.drawable.item_food_5),
-            Food("Courmet combo", "NON-VEG BREAKFAST", R.drawable.item_food_6),
-            Food("Luttuce combo", "NON-VEG BREAKFAST", R.drawable.item_food_1),
-            Food("Courmet combo", "VEG BREAKFAST", R.drawable.item_food_2),
-            Food("Spaghetti", "VEG BREAKFAST", R.drawable.item_food_3),
-            Food("Fries Combo", "NON-VEG BREAKFAST", R.drawable.item_food_4),
-            Food("Spaghetti combo", "VEG BREAKFAST", R.drawable.item_food_5),
-            Food("Courmet combo", "NON-VEG BREAKFAST", R.drawable.item_food_6)
-        )
-
-
         main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
             FoodViewModel()
         ).apply {
-            submitList(foods)
+            submitList(FoodFactory.getFoodSample())
         }
 
         main_recycler_view.run {
@@ -67,13 +37,13 @@ class MainActivity : AppCompatActivity() {
             viewModel.toastEvent.observe(this@MainActivity, Observer {
                 Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
             })
-            submit(foods)
+            submit(FoodFactory.getFoodSample())
         }
 
         add_btn.setOnClickListener {
-            foods.addAll(foods)
+            /*FoodFactory.getFoodSample().addAll(foods)
             (main_basic_recycler_view.adapter as DataBindingListAdapter<Food>)
-                .submitList(foods + foods2)
+                .submitList(foods + foods2)*/
         }
     }
 
