@@ -8,7 +8,7 @@ A SimpleRecyclerView with databinding for andorid list
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
 </p>
 
-### Gradle 
+### Dependency Gradle 
 Add below codes to your **root** `build.gradle` file (not your module build.gradle file).
 ```
 allprojects {
@@ -27,7 +27,7 @@ buildFeatures {
 
 ```gradle
 dependencies {
-  implementation 'com.github.KennethSS:SimpleRecyclerView:1.0.3'
+  implementation 'com.github.KennethSS:SimpleRecyclerView:x.y.z'
 }
 ```
 
