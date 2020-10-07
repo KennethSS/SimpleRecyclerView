@@ -69,6 +69,6 @@ main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
        }
 ```
 
-![Preview](https://user-images.githubusercontent.com/39362939/95305625-32dd3400-08c1-11eb-88b3-92be623a5aca.gif) {:.aligncenter}
-
-
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/39362939/95305625-32dd3400-08c1-11eb-88b3-92be623a5aca.gif">
+</p>
