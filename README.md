@@ -34,6 +34,23 @@ dependencies {
 
 ## Usage
 ### Basic Example
+
+## Prepare to making item
+```xml
+<layout>    
+    <data>
+        <!-- You should to declare for Item -->
+        <variable
+            name="item"
+            type="com.solar.recyclerviewsample.Food" />
+
+        <variable
+            name="vm"
+            type="com.solar.recyclerviewsample.FoodViewModel" />
+    </data>
+</layout>
+```
+
 ```kotlin
 main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
             FoodViewModel()
