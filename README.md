@@ -44,6 +44,7 @@ dependencies {
             name="item"
             type="com.solar.recyclerviewsample.Food" />
 
+        <!-- If you wan't to that you have not to declare -->
         <variable
             name="vm"
             type="com.solar.recyclerviewsample.FoodViewModel" />
