@@ -61,6 +61,7 @@ data class Food (
 ) : ItemType
 ```
 
+#### Set Adapter
 ```kotlin
 main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
             FoodViewModel()
