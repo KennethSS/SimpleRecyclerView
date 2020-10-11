@@ -27,7 +27,7 @@ buildFeatures {
 
 ```gradle
 dependencies {
-  implementation 'com.github.KennethSS:SimpleRecyclerView:x.y.z'
+  implementation 'com.github.KennethSS:SimpleRecyclerView:1.0.2'
 }
 ```
 
