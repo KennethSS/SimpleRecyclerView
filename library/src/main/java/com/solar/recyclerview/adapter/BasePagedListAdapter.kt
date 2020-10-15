@@ -7,4 +7,6 @@ import com.solar.recyclerview.ItemType
 
 abstract class BasePagedListAdapter<T : ItemType, VH : RecyclerView.ViewHolder>(
     diffCallback: DiffUtil.ItemCallback<T>
-) : PagedListAdapter<T, VH>(diffCallback)
+) : PagedListAdapter<T, VH>(diffCallback) {
+    override fun getItemViewType(position: Int): Int = getItem(position)?.layoutRes?:0
+}
