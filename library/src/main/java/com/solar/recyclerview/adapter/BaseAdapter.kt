@@ -27,6 +27,8 @@ abstract class BaseAdapter<T : ItemType, VH: RecyclerView.ViewHolder> : Recycler
         notifyDataSetChanged()
     }
 
+
+
     fun remove(item: T) {
         val index = list.indexOf(item)
         if (index != -1) {

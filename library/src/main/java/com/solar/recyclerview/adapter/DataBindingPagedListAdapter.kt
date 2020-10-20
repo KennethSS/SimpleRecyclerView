@@ -27,4 +27,6 @@ class DataBindingPagedListAdapter<T : ItemType>(private val viewModel: ViewModel
             holder.bind(it, position, viewModel)
         }
     }
+
+
 }

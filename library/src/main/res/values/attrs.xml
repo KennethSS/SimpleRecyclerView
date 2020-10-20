@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <declare-styleable name="SolarRecyclerView">
+        <attr name="layoutManagerType" format="enum">
+            <enum name="Linear" value="0"/>
+            <enum name="Grid" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>
