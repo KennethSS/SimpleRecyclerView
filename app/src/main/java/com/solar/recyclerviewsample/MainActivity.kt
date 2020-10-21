@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        add_item.setOnClickListener {
+            main_recycler_view.addAt(10, FoodFactory.getFood())
+        }
+
         //setListAndState(main_basic_recycler_view, FoodFactory.getFoodSample())
         /*main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
             FoodViewModel()
@@ -50,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 override fun isEnd() {
                     postDelayed({
                         addMore(FoodFactory.getFoodSample())
-                    }, 1000)
+                    }, 2000)
                 }
             }
         }

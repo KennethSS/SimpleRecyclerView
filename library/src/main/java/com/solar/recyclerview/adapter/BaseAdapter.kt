@@ -12,22 +12,20 @@ abstract class BaseAdapter<T : ItemType, VH: RecyclerView.ViewHolder> : Recycler
 
     fun add(item: T) {
         list.add(item)
-        notifyDataSetChanged()
+        notifyItemInserted(itemCount)
     }
 
     fun addAt(index: Int, item: T) {
         if (index < list.size) {
             list.add(index, item)
-            notifyDataSetChanged()
+            notifyItemInserted(index)
         }
     }
 
     fun addAll(list: List<T>) {
         this.list.addAll(list)
-        notifyDataSetChanged()
+        notifyItemRangeChanged(itemCount, list.size)
     }
-
-
 
     fun remove(item: T) {
         val index = list.indexOf(item)
@@ -47,7 +45,7 @@ abstract class BaseAdapter<T : ItemType, VH: RecyclerView.ViewHolder> : Recycler
     fun update(index: Int, item: T) {
         if (index < list.size) {
             list[index] = item
-            notifyDataSetChanged()
+            notifyItemChanged(index)
         }
     }
 

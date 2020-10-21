@@ -1,8 +1,10 @@
 package com.solar.recyclerview
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.util.Log
+import androidx.core.content.withStyledAttributes
 import androidx.lifecycle.ViewModel
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
@@ -28,8 +30,6 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
 
     abstract val viewModel: ViewModel
 
-    var layoutManagerType: LayoutManagerType = LayoutManagerType.GRID
-
     var isReverse: Boolean = true
 
     var orientation = VERTICAL
@@ -40,7 +40,8 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
     private val loadStateAdapter: DataBindingLoadStateAdapter
             by lazy { DataBindingLoadStateAdapter() }
 
-    private var itemListener: ItemListener<T>? = null
+    private var layoutManagerType: LayoutManagerType
+    private var listType: ListType
 
     fun addMore(list: List<T>, isEnd: Boolean = false) {
         if (adapter == null) {
@@ -50,17 +51,15 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
             )
         }
 
-        if (bindingAdapter.list.isEmpty()) {
-            bindingAdapter.addAll(list)
+        if (bindingAdapter.itemCount == 0) {
+            bindingAdapter.submitList(list)
         } else {
             bindingAdapter.list.addAll(list)
+            bindingAdapter.notifyItemRangeInserted(bindingAdapter.itemCount, list.size)
             //bindingAdapter.notifyDataSetChanged()
-
-            Log.d("SolarRecyclerView", bindingAdapter.list.size.toString())
-            Log.d("SolarRecyclerView", list.size.toString())
-
-            bindingAdapter.notifyItemRangeChanged(bindingAdapter.list.size, list.size)
-            bindingAdapter.notifyDataSetChanged()
+            /*adapter?.let {
+                it.notifyItemRangeChanged(bindingAdapter.itemCount + 1, list.size)
+            }*/
         }
 
         loadStateAdapter.loadState = LoadState.NotLoading(isEnd)
@@ -68,20 +67,48 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
 
     fun add(item: T) {
         bindingAdapter.add(item)
+        scrollToPosition(bindingAdapter.itemCount-1)
+    }
+
+    fun addAt(position: Int, item: T) {
+        bindingAdapter.addAt(position, item)
     }
 
     init {
+        /*context.theme.obtainStyledAttributes()
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.SolarRecyclerView,
             0, 0
         ).apply {
             try {
-                val type = getInteger(R.styleable.SolarRecyclerView_layoutManagerType, 0)
-                layoutManagerType = when(type) {
+
+                getInteger()
+                val listType = getInteger(R.styleable.SolarRecyclerView_listType, 0)
+
+
+
+            } finally {
+                recycle()
+            }
+        }*/
+
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.SolarRecyclerView,
+            0, 0
+        ).apply {
+            try {
+                layoutManagerType = when(getInteger(R.styleable.SolarRecyclerView_layoutManagerType, 0)) {
                     0 -> LayoutManagerType.LINEAR
                     1 -> LayoutManagerType.GRID
                     else -> LayoutManagerType.LINEAR
+                }
+
+                listType = when(getInteger(R.styleable.SolarRecyclerView_listType, 0)) {
+                    0 -> ListType.COMMON
+                    1 -> ListType.REVERSE
+                    else -> ListType.CHAT
                 }
             } finally {
                 recycle()
@@ -91,14 +118,20 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
         init(context)
     }
 
-    private fun init(context: Context) {
-
-        when(layoutManagerType) {
+    private fun setLayoutManager() {
+        /*when(layoutManagerType) {
             LayoutManagerType.LINEAR -> {
                 layoutManager = LinearLayoutManager(context).also {
                     it.orientation = orientation
-                    it.reverseLayout = isReverse
+                    //it.reverseLayout = isReverse
                     //it.stackFromEnd = isReverse
+
+                    *//*when(listType) {
+                        ListType.CHAT -> {
+                            it.reverseLayout = false
+                            it.stackFromEnd = true
+                        }
+                    }*//*
                 }
             }
 
@@ -111,9 +144,10 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
             LayoutManagerType.STAGGERED -> {
 
             }
-        }
+        }*/
+    }
 
-
+    private fun init(context: Context) {
         addOnScrollListener(object: RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)

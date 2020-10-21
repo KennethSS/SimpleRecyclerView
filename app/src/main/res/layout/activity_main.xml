@@ -16,12 +16,18 @@
         android:visibility="gone"
         tools:listitem="@layout/item_food_menu"/>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="addItem"/>
+
     <com.solar.recyclerviewsample.FoodRecyclerView
         android:id="@+id/main_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
-        app:layoutManagerType="Linear"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_food_menu"/>
 
     <androidx.appcompat.widget.AppCompatButton
