@@ -28,7 +28,7 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
             loadStateAdapter.loadState = value
         }
 
-    abstract val viewModel: ViewModel
+    var viewModel: ViewModel? = null
 
     var isReverse: Boolean = true
 
@@ -172,7 +172,10 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
                     if (visibleItemCount + lastVisibleItemPosition + threshold > totalItemCount) {
                         if (loadStateAdapter.loadState != LoadState.Loading) {
                             listener?.isEnd()
-                            loadStateAdapter.loadState = LoadState.Loading
+
+                            post {
+                                loadStateAdapter.loadState = LoadState.Loading
+                            }
                         }
                     }
                 }

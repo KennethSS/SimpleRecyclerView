@@ -9,7 +9,7 @@ import com.solar.recyclerview.ItemListener
 import com.solar.recyclerview.holder.BindingHolder
 import com.solar.recyclerview.ItemType
 
-class DataBindingAdapter<T : ItemType>(private val viewModel: ViewModel)
+class DataBindingAdapter<T : ItemType>(private val viewModel: ViewModel?)
     : BaseAdapter<T, BindingHolder<T>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<T> {

@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity() {
         }*/
 
         main_recycler_view.run {
-            addMore(FoodFactory.getFoodSample(), false)
+            addMore(FoodFactory.getFoodSample())
+
             listener = object: SolarRecyclerView.RecyclerViewListener {
                 override fun isEnd() {
                     postDelayed({

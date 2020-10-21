@@ -10,7 +10,7 @@ class BindingHolder<T>(
     val binding: ViewDataBinding
 ) : RecyclerView.ViewHolder(binding.root){
 
-    fun bind(item: T, position: Int, viewModel: ViewModel) {
+    fun bind(item: T, position: Int, viewModel: ViewModel?) {
         binding.setVariable(BR.item, item)
         binding.setVariable(BR.position, position)
         binding.setVariable(BR.vm, viewModel)

@@ -6,7 +6,4 @@ import com.solar.recyclerview.SolarRecyclerView
 
 class FoodRecyclerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : SolarRecyclerView<Food>(context, attrs, defStyleAttr) {
-
-    override val viewModel: FoodViewModel = FoodViewModel()
-}
+) : SolarRecyclerView<Food>(context, attrs, defStyleAttr)
