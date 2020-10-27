@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             listener = object: SolarRecyclerView.RecyclerViewListener {
                 override fun isEnd() {
                     postDelayed({
-                        addMore(FoodFactory.getFoodSample())
+                        addMore(FoodFactory.getFoodSample(), true)
                     }, 2000)
                 }
             }

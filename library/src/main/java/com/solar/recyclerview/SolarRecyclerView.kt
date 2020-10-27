@@ -56,10 +56,6 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
         } else {
             bindingAdapter.list.addAll(list)
             bindingAdapter.notifyItemRangeInserted(bindingAdapter.itemCount, list.size)
-            //bindingAdapter.notifyDataSetChanged()
-            /*adapter?.let {
-                it.notifyItemRangeChanged(bindingAdapter.itemCount + 1, list.size)
-            }*/
         }
 
         loadStateAdapter.loadState = LoadState.NotLoading(isEnd)
@@ -75,24 +71,6 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
     }
 
     init {
-        /*context.theme.obtainStyledAttributes()
-        context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.SolarRecyclerView,
-            0, 0
-        ).apply {
-            try {
-
-                getInteger()
-                val listType = getInteger(R.styleable.SolarRecyclerView_listType, 0)
-
-
-
-            } finally {
-                recycle()
-            }
-        }*/
-
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.SolarRecyclerView,
@@ -118,35 +96,6 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
         init(context)
     }
 
-    private fun setLayoutManager() {
-        /*when(layoutManagerType) {
-            LayoutManagerType.LINEAR -> {
-                layoutManager = LinearLayoutManager(context).also {
-                    it.orientation = orientation
-                    //it.reverseLayout = isReverse
-                    //it.stackFromEnd = isReverse
-
-                    *//*when(listType) {
-                        ListType.CHAT -> {
-                            it.reverseLayout = false
-                            it.stackFromEnd = true
-                        }
-                    }*//*
-                }
-            }
-
-            LayoutManagerType.GRID -> {
-                layoutManager = GridLayoutManager(context, 3).also {
-                    it.orientation = orientation
-                }
-            }
-
-            LayoutManagerType.STAGGERED -> {
-
-            }
-        }*/
-    }
-
     private fun init(context: Context) {
         addOnScrollListener(object: RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -170,7 +119,7 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
                     }
 
                     if (visibleItemCount + lastVisibleItemPosition + threshold > totalItemCount) {
-                        if (loadStateAdapter.loadState != LoadState.Loading) {
+                        if (loadStateAdapter.loadState != LoadState.Loading && !loadStateAdapter.loadState.endOfPaginationReached) {
                             listener?.isEnd()
 
                             post {
