@@ -1,4 +1,4 @@
-package com.solar.recyclerview.adapter
+package com.solar.recyclerview.adapter.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.DiffUtil
 import com.solar.recyclerview.ItemType
 import com.solar.recyclerview.holder.BindingHolder
 
-class DataBindingPagedListAdapter<T : ItemType>(private val viewModel: ViewModel, diffCallback: DiffUtil.ItemCallback<T>)
-    : BasePagedListAdapter<T, BindingHolder<T>>(diffCallback) {
+class DataBindingListAdapter<T : ItemType>(private val viewModel: ViewModel, diffCallback: DiffUtil.ItemCallback<T>)
+    : BaseListAdapter<T, BindingHolder<T>>(diffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingHolder<T> {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
@@ -23,10 +23,6 @@ class DataBindingPagedListAdapter<T : ItemType>(private val viewModel: ViewModel
     }
 
     override fun onBindViewHolder(holder: BindingHolder<T>, position: Int) {
-        getItem(position)?.let {
-            holder.bind(it, position, viewModel)
-        }
+        holder.bind(getItem(position), position, viewModel)
     }
-
-
 }

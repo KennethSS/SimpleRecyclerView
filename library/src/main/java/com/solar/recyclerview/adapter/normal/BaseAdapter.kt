@@ -1,4 +1,4 @@
-package com.solar.recyclerview.adapter
+package com.solar.recyclerview.adapter.normal
 
 import androidx.recyclerview.widget.RecyclerView
 import com.solar.recyclerview.ItemType

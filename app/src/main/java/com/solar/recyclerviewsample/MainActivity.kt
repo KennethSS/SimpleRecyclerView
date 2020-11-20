@@ -2,20 +2,14 @@ package com.solar.recyclerviewsample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.paging.LoadState
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.solar.recyclerview.ItemListener
-import com.solar.recyclerview.RecyclerViewPagination
 import com.solar.recyclerview.SolarRecyclerView
 import com.solar.recyclerview.adapter.*
+import com.solar.recyclerview.adapter.normal.DataBindingAdapter
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_food_menu.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +67,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setList(recyclerView: RecyclerView) {
-        recyclerView.adapter = DataBindingAdapter<Food>(FoodViewModel()).apply {
+        recyclerView.adapter = DataBindingAdapter<Food>(
+            FoodViewModel()
+        ).apply {
 
         }
     }
@@ -81,7 +77,9 @@ class MainActivity : AppCompatActivity() {
     private fun setListAndState(recyclerView: RecyclerView, list: List<Food>) {
         val adapter = DataBindingLoadStateAdapter()
 
-        val foodAdapter = DataBindingAdapter<Food>(FoodViewModel()).apply {
+        val foodAdapter = DataBindingAdapter<Food>(
+            FoodViewModel()
+        ).apply {
             submitList(list)
         }
 

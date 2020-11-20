@@ -1,4 +1,4 @@
-package com.solar.recyclerview.adapter
+package com.solar.recyclerview.adapter.paging
 
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil

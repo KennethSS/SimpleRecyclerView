@@ -1,17 +1,14 @@
 package com.solar.recyclerview
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.util.AttributeSet
-import android.util.Log
-import androidx.core.content.withStyledAttributes
 import androidx.lifecycle.ViewModel
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.solar.recyclerview.adapter.DataBindingAdapter
+import com.solar.recyclerview.adapter.normal.DataBindingAdapter
 import com.solar.recyclerview.adapter.DataBindingLoadStateAdapter
 
 abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
@@ -35,7 +32,11 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
     var orientation = VERTICAL
 
     private val bindingAdapter: DataBindingAdapter<T>
-            by lazy { DataBindingAdapter<T>(viewModel) }
+            by lazy {
+                DataBindingAdapter<T>(
+                    viewModel
+                )
+            }
 
     private val loadStateAdapter: DataBindingLoadStateAdapter
             by lazy { DataBindingLoadStateAdapter() }

@@ -1,4 +1,4 @@
-package com.solar.recyclerview.adapter
+package com.solar.recyclerview.adapter.list
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
