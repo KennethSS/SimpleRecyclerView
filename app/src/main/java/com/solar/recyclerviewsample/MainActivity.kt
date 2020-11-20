@@ -67,9 +67,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setList(recyclerView: RecyclerView) {
-        recyclerView.adapter = DataBindingAdapter<Food>(
+        recyclerView.adapter = object: DataBindingAdapter<Food>(
             FoodViewModel()
-        ).apply {
+        ){}.apply {
 
         }
     }
@@ -77,9 +77,9 @@ class MainActivity : AppCompatActivity() {
     private fun setListAndState(recyclerView: RecyclerView, list: List<Food>) {
         val adapter = DataBindingLoadStateAdapter()
 
-        val foodAdapter = DataBindingAdapter<Food>(
+        val foodAdapter = object: DataBindingAdapter<Food>(
             FoodViewModel()
-        ).apply {
+        ){}.apply {
             submitList(list)
         }
 

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.solar.recyclerview.adapter.normal.DataBindingAdapter
 import com.solar.recyclerview.adapter.DataBindingLoadStateAdapter
+import com.solar.recyclerview.adapter.SolarListAdapter
 
 abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -31,12 +32,7 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
 
     var orientation = VERTICAL
 
-    private val bindingAdapter: DataBindingAdapter<T>
-            by lazy {
-                DataBindingAdapter<T>(
-                    viewModel
-                )
-            }
+    private val bindingAdapter: DataBindingAdapter<T> by lazy { SolarListAdapter<T>(viewModel) }
 
     private val loadStateAdapter: DataBindingLoadStateAdapter
             by lazy { DataBindingLoadStateAdapter() }
