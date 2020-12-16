@@ -9,4 +9,9 @@ class FoodViewModel : ViewModel() {
     fun onClick(item: Food) {
         toastEvent.postValue(item.title)
     }
+
+
+    fun getFoodList(): List<Food> {
+        return FoodFactory.getFoodSample()
+    }
 }

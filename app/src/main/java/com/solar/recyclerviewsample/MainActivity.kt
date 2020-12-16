@@ -2,16 +2,28 @@ package com.solar.recyclerviewsample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import com.solar.recyclerview.SolarRecyclerView
 import com.solar.recyclerview.adapter.*
 import com.solar.recyclerview.adapter.normal.DataBindingAdapter
+import com.solar.recyclerview.listener.ScrollListener
+import com.solar.recyclerviewsample.databinding.FragmentListBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val foodViewModel: FoodViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,12 +32,40 @@ class MainActivity : AppCompatActivity() {
             main_recycler_view.addAt(10, FoodFactory.getFood())
         }
 
-        //setListAndState(main_basic_recycler_view, FoodFactory.getFoodSample())
-        /*main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
-            FoodViewModel()
-        ).apply {
+        val adapter = SolarListAdapter<Food>(foodViewModel).apply {
             submitList(FoodFactory.getFoodSample())
+        }
+
+        delete_item.setOnClickListener {
+            adapter.removeAt(0, isAnim = true)
+        }
+
+        main_pager.adapter = object: FragmentPagerAdapter(supportFragmentManager,
+            BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+        ) {
+            override fun getItem(position: Int): Fragment = when(position) {
+                0 -> ListFragment()
+                1 -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
+                else -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
+            }
+            override fun getCount(): Int = 1
+        }
+
+        /*main_basic_recycler_view.also {
+            it.itemAnimator = object: DefaultItemAnimator() {
+                override fun onAnimationFinished(viewHolder: RecyclerView.ViewHolder) {
+                    super.onAnimationFinished(viewHolder)
+                    Log.d("MainActivity", "onAnimationFinished")
+                }
+            }
+            it.adapter = adapter
+            it.addOnScrollListener(ScrollListener(4) {
+                Log.d("MainActivity", "isAttachDestination")
+            })
         }*/
+
+        //setListAndState(main_basic_recycler_view, FoodFactory.getFoodSample())
+
 
         /*main_recycler_view.run {
             setOnItemListener(object: ItemListener<Food> {
@@ -42,7 +82,7 @@ class MainActivity : AppCompatActivity() {
             submit(FoodFactory.getFoodSample())
         }*/
 
-        main_recycler_view.run {
+        /*main_recycler_view.run {
             addMore(FoodFactory.getFoodSample())
 
             listener = object: SolarRecyclerView.RecyclerViewListener {
@@ -52,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                     }, 2000)
                 }
             }
-        }
+        }*/
 
         add_btn.setOnClickListener {
             /*FoodFactory.getFoodSample().addAll(foods)

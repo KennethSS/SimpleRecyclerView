@@ -56,6 +56,12 @@ abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
         }
 
         loadStateAdapter.loadState = LoadState.NotLoading(isEnd)
+
+        adapter = bindingAdapter
+    }
+
+    private fun getConcatAdapter(): ConcatAdapter {
+        return ConcatAdapter()
     }
 
     fun add(item: T) {

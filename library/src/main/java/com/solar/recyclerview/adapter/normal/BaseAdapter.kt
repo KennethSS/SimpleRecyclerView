@@ -27,18 +27,22 @@ abstract class BaseAdapter<T : ItemType, VH: RecyclerView.ViewHolder> : Recycler
         notifyItemRangeChanged(itemCount, list.size)
     }
 
-    fun remove(item: T) {
+    fun remove(item: T, isAnim: Boolean = false) {
         val index = list.indexOf(item)
         if (index != -1) {
             list.removeAt(index)
-            notifyItemRemoved(index)
+
+            if (isAnim) notifyItemRangeRemoved(index, 1)
+            else notifyDataSetChanged()
         }
     }
 
-    fun removeAt(position: Int) {
+    fun removeAt(position: Int, isAnim: Boolean = false) {
         if (position < list.size) {
             list.removeAt(position)
-            notifyDataSetChanged()
+
+            if (isAnim) notifyItemRangeRemoved(position, 1)
+            else notifyDataSetChanged()
         }
     }
 

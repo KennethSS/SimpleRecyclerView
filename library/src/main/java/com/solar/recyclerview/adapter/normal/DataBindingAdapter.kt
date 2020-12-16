@@ -1,5 +1,6 @@
 package com.solar.recyclerview.adapter.normal
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -24,6 +25,7 @@ abstract class DataBindingAdapter<T : ItemType>(private val viewModel: ViewModel
 
     override fun onBindViewHolder(holder: BindingHolder<T>, position: Int) {
         if (list.isNotEmpty()) {
+            Log.d("DataBindingAdapter", "position: $position")
             holder.bind(list[position], position, viewModel)
         }
     }
