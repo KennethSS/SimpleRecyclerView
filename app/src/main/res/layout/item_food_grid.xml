@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.solar.recyclerviewsample.FoodGrid" />
+
+        <variable
+            name="vm"
+            type="com.solar.recyclerviewsample.FoodViewModel" />
+    </data>
+
+    <com.solar.recyclerviewsample.GridImageView
+        android:id="@+id/item_food_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        tools:src="@tools:sample/avatars"
+        app:srcImgRes="@{item.img}"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</layout>

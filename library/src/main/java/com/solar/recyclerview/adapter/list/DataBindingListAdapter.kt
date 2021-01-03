@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DiffUtil
-import com.solar.recyclerview.ItemType
-import com.solar.recyclerview.holder.BindingHolder
+import com.solar.recyclerview.adapter.holder.ItemType
+import com.solar.recyclerview.adapter.holder.BindingHolder
 
 class DataBindingListAdapter<T : ItemType>(private val viewModel: ViewModel, diffCallback: DiffUtil.ItemCallback<T>)
     : BaseListAdapter<T, BindingHolder<T>>(diffCallback) {

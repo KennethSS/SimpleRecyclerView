@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -11,16 +12,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.solar.recyclerview.SolarNormalListView
+        <com.solar.recyclerview.SolarRecyclerView
             android:id="@+id/list_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:viewModel="@{vm}"
-            app:submit="@{vm.getFoodList()}">
-        </com.solar.recyclerview.SolarNormalListView>
+            bind:vm="@{vm}"
+            bind:items="@{vm.foodList}">
+        </com.solar.recyclerview.SolarRecyclerView>
     </LinearLayout>
 </layout>

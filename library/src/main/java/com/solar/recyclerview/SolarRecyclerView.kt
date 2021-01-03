@@ -3,139 +3,61 @@ package com.solar.recyclerview
 import android.content.Context
 import android.util.AttributeSet
 import androidx.lifecycle.ViewModel
-import androidx.paging.LoadState
-import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.solar.recyclerview.adapter.normal.DataBindingAdapter
-import com.solar.recyclerview.adapter.DataBindingLoadStateAdapter
 import com.solar.recyclerview.adapter.SolarListAdapter
+import com.solar.recyclerview.adapter.holder.ItemType
+import com.solar.recyclerview.listener.LoadMoreScrollListener
 
-abstract class SolarRecyclerView<T: ItemType> @JvmOverloads constructor(
+/**
+ * Copyright 2020 Kenneth
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ **/
+class SolarRecyclerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr) {
+) : AbstractSolarRecyclerView(context, attrs, defStyleAttr) {
 
-    var threshold = 2
+    private val controller = RecyclerViewController()
 
-    var listener: RecyclerViewListener? = null
-
-    var loadState: LoadState
-        get() = loadStateAdapter.loadState
-        set(value) {
-            loadStateAdapter.loadState = value
-        }
-
-    var viewModel: ViewModel? = null
-
-    var isReverse: Boolean = true
-
-    var orientation = VERTICAL
-
-    private val bindingAdapter: DataBindingAdapter<T> by lazy { SolarListAdapter<T>(viewModel) }
-
-    private val loadStateAdapter: DataBindingLoadStateAdapter
-            by lazy { DataBindingLoadStateAdapter() }
-
-    private var layoutManagerType: LayoutManagerType
-    private var listType: ListType
-
-    fun addMore(list: List<T>, isEnd: Boolean = false) {
-        if (adapter == null) {
-            adapter = ConcatAdapter(
-                bindingAdapter,
-                loadStateAdapter
-            )
-        }
-
-        if (bindingAdapter.itemCount == 0) {
-            bindingAdapter.submitList(list)
-        } else {
-            bindingAdapter.list.addAll(list)
-            bindingAdapter.notifyItemRangeInserted(bindingAdapter.itemCount, list.size)
-        }
-
-        loadStateAdapter.loadState = LoadState.NotLoading(isEnd)
-
-        adapter = bindingAdapter
+    private val onAttachDestination: (() -> Unit) = {
+        onAttachEnd?.invoke()
     }
 
-    private fun getConcatAdapter(): ConcatAdapter {
-        return ConcatAdapter()
-    }
-
-    fun add(item: T) {
-        bindingAdapter.add(item)
-        scrollToPosition(bindingAdapter.itemCount-1)
-    }
-
-    fun addAt(position: Int, item: T) {
-        bindingAdapter.addAt(position, item)
-    }
+    var onAttachEnd: (() -> Unit)? = null
 
     init {
-        context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.SolarRecyclerView,
-            0, 0
-        ).apply {
-            try {
-                layoutManagerType = when(getInteger(R.styleable.SolarRecyclerView_layoutManagerType, 0)) {
-                    0 -> LayoutManagerType.LINEAR
-                    1 -> LayoutManagerType.GRID
-                    else -> LayoutManagerType.LINEAR
-                }
+        overScrollMode = OVER_SCROLL_NEVER
+        clipToPadding = false
+        addOnScrollListener(LoadMoreScrollListener(controller, onAttachDestination))
+    }
 
-                listType = when(getInteger(R.styleable.SolarRecyclerView_listType, 0)) {
-                    0 -> ListType.COMMON
-                    1 -> ListType.REVERSE
-                    else -> ListType.CHAT
+    fun <T : ItemType> loadMore(
+        list: List<T>,
+        viewModel: ViewModel? = null,
+        isLoading: Boolean
+    ) {
+        post {
+            if (adapter != null) {
+                (adapter as SolarListAdapter<T>).addAll(list)
+            } else {
+                controller.isLoading = isLoading
+                adapter = SolarListAdapter<ItemType>(
+                    controller,
+                    viewModel = viewModel
+                ).apply {
+                    submitList(list)
                 }
-            } finally {
-                recycle()
             }
         }
-
-        init(context)
-    }
-
-    private fun init(context: Context) {
-        addOnScrollListener(object: RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-                if (!recyclerView.canScrollVertically(VERTICAL) && newState == SCROLL_STATE_IDLE) {
-                    //recyclerView.smoothScrollToPosition(bindingAdapter.itemCount)
-                }
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                layoutManager?.let { lm ->
-                    val visibleItemCount = lm.childCount
-                    val totalItemCount = lm.itemCount
-
-                    val lastVisibleItemPosition = when(lm) {
-                        is LinearLayoutManager -> lm.findLastVisibleItemPosition()
-                        is GridLayoutManager -> lm.findLastVisibleItemPosition()
-                        else -> return
-                    }
-
-                    if (visibleItemCount + lastVisibleItemPosition + threshold > totalItemCount) {
-                        if (loadStateAdapter.loadState != LoadState.Loading && !loadStateAdapter.loadState.endOfPaginationReached) {
-                            listener?.isEnd()
-
-                            post {
-                                loadStateAdapter.loadState = LoadState.Loading
-                            }
-                        }
-                    }
-                }
-            }
-        })
-    }
-
-    interface RecyclerViewListener {
-        fun isEnd()
     }
 }

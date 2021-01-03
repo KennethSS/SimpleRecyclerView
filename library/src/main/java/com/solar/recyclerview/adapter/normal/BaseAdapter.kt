@@ -1,7 +1,8 @@
 package com.solar.recyclerview.adapter.normal
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
-import com.solar.recyclerview.ItemType
+import com.solar.recyclerview.adapter.holder.ItemType
 
 /**
  *  This is Basic Class for RecyclerView Adapter
@@ -23,8 +24,13 @@ abstract class BaseAdapter<T : ItemType, VH: RecyclerView.ViewHolder> : Recycler
     }
 
     fun addAll(list: List<T>) {
+        Log.d("GridFragment", "addAll")
+
+        val previous = this.list.size
         this.list.addAll(list)
-        notifyItemRangeChanged(itemCount, list.size)
+        Log.d("GridFragment", "${previous}")
+        Log.d("GridFragment", "${this.list.size}")
+        notifyItemRangeChanged(previous, this.list.size)
     }
 
     fun remove(item: T, isAnim: Boolean = false) {
@@ -54,8 +60,10 @@ abstract class BaseAdapter<T : ItemType, VH: RecyclerView.ViewHolder> : Recycler
     }
 
     fun submitList(list: List<T>) {
-        this.list.clear()
-        this.list.addAll(list)
+        this.list.run {
+            clear()
+            addAll(list)
+        }
         notifyDataSetChanged()
     }
 

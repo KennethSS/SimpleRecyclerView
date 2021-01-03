@@ -1,4 +1,4 @@
-package com.solar.recyclerview
+package com.solar.recyclerviewsample
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager

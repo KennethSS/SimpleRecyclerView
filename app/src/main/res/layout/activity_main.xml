@@ -46,15 +46,6 @@
     </LinearLayout>
 
 
-    <com.solar.recyclerviewsample.FoodRecyclerView
-        android:id="@+id/main_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_food_menu"/>
-
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_btn"
         android:layout_width="wrap_content"

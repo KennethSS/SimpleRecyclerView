@@ -3,9 +3,13 @@ package com.solar.recyclerviewsample
 import android.os.Build
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.ViewModel
-import com.solar.recyclerview.ItemType
-import com.solar.recyclerview.SolarNormalListView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.solar.recyclerview.SolarRecyclerView
+import com.solar.recyclerview.adapter.normal.DataBindingAdapter
+import com.solar.recyclerview.decoration.SolarItemDecoration
+import com.solar.recyclerviewsample.model.movie.Movie
 
 @BindingAdapter("clipOutline")
 fun setClipOutline(iv: AppCompatImageView, clipToOutline: Boolean?) {
@@ -16,9 +20,28 @@ fun setClipOutline(iv: AppCompatImageView, clipToOutline: Boolean?) {
     }
 }
 
-@BindingAdapter("submit", "viewModel")
-fun SolarNormalListView.submit(list: List<ItemType>?, viewModel: ViewModel?) {
-    list?.let {
-        submit(list, viewModel)
+@BindingAdapter("url")
+fun setImageFromUrl(iv: AppCompatImageView, url: String?) {
+    url?.let {
+        Glide.with(iv)
+            .load(url)
+            .apply(RequestOptions.centerCropTransform())
+            .into(iv)
     }
+}
+
+
+@BindingAdapter("submit")
+fun submitRecyclerView(rv: SolarRecyclerView, list: List<Movie>?) {
+    list?.let {
+        rv.adapter = object: DataBindingAdapter<Movie>(rv.layoutManager) {}.apply {
+            submitList(list)
+            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        }
+    }
+}
+
+@BindingAdapter("divider")
+fun setItemDivider(rv: RecyclerView, space: Int) {
+    rv.addItemDecoration(SolarItemDecoration(space))
 }

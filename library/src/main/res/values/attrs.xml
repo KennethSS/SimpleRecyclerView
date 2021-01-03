@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SolarRecyclerView">
-        <attr name="layoutManagerType" format="enum">
-            <enum name="Linear" value="0"/>
-            <enum name="Grid" value="1"/>
-        </attr>
-
-        <attr name="listType" format="enum">
-            <enum name="Common" value="0"/>
-            <enum name="Reverse" value="1"/>
-            <enum name="Chat" value="2"/>
+        <attr name="snapType" format="enum">
+            <enum name="None" value="0"/>
+            <enum name="Pager" value="1"/>
         </attr>
     </declare-styleable>
 </resources>

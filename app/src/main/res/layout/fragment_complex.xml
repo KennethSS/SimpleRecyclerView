@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.solar.recyclerview.SolarRecyclerView
+        android:id="@+id/solar_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:snapType="None"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+    </com.solar.recyclerview.SolarRecyclerView>
+</layout>

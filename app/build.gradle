@@ -49,8 +49,12 @@ dependencies {
     implementation "androidx.paging:paging-runtime:3.0.0-alpha06"
     implementation "androidx.fragment:fragment-ktx:1.2.5"
 
+    implementation "com.github.bumptech.glide:glide:4.11.0"
+
     implementation project(path: ':library')
 
+
+    implementation 'com.arasthel:spannedgridlayoutmanager:3.0.2'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

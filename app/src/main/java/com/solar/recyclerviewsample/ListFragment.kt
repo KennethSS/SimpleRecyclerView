@@ -1,13 +1,14 @@
 package com.solar.recyclerviewsample
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.solar.recyclerview.SolarNormalListView
+import com.solar.recyclerview.listener.LoadMoreScrollListener
 import com.solar.recyclerviewsample.databinding.FragmentListBinding
 
 /**
@@ -27,15 +28,20 @@ class ListFragment : Fragment() {
         bind.lifecycleOwner = viewLifecycleOwner
         bind.vm = foodViewModel
 
-        bind.listView.solarListViewListener = object: SolarNormalListView.SolarListViewListener {
-            override fun isAttachDestination() {
-                bind.root.postDelayed({
-                    bind.listView.addMore(foodViewModel.getFoodList())
-                }, 2000)
-            }
+        // Performance Options
+        bind.listView.run {
+            setHasFixedSize(true)   // 뷰홀더의 크기가 정적인 경우 크기 계산을 다시하지 않게 설정
+            //setItemViewCacheSize(4) // onBindViewHolder 를 다시 실행하지 않고 재활용할 ViewCache 크기
         }
+
+        /*bind.listView.addOnScrollListener(LoadMoreScrollListener({
+            Log.d("ListFragment", "EndScroll")
+            bind.root.postDelayed({
+                foodViewModel.getMoreFoodList()
+            }, 3000)
+        }))*/
+
+        foodViewModel.getMoreFoodList()
         return bind.root
     }
-
-
 }

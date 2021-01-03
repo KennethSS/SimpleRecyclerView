@@ -2,22 +2,20 @@ package com.solar.recyclerviewsample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.PagerAdapter
-import com.solar.recyclerview.SolarRecyclerView
 import com.solar.recyclerview.adapter.*
 import com.solar.recyclerview.adapter.normal.DataBindingAdapter
-import com.solar.recyclerview.listener.ScrollListener
+import com.solar.recyclerviewsample.complex.ComplexFactory
+import com.solar.recyclerviewsample.complex.ComplexFragment
 import com.solar.recyclerviewsample.databinding.FragmentListBinding
+import com.solar.recyclerviewsample.model.food.Food
+import com.solar.recyclerviewsample.model.food.FoodFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,24 +26,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        add_item.setOnClickListener {
-            main_recycler_view.addAt(10, FoodFactory.getFood())
-        }
-
-        val adapter = SolarListAdapter<Food>(foodViewModel).apply {
-            submitList(FoodFactory.getFoodSample())
-        }
-
-        delete_item.setOnClickListener {
-            adapter.removeAt(0, isAnim = true)
-        }
-
+        main_pager.offscreenPageLimit = 0
         main_pager.adapter = object: FragmentPagerAdapter(supportFragmentManager,
             BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         ) {
             override fun getItem(position: Int): Fragment = when(position) {
-                0 -> ListFragment()
-                1 -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
+                0 -> GridFragment()
+                1 -> ComplexFragment()
+                2 -> ListFragment()
+                3 -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
                 else -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
             }
             override fun getCount(): Int = 1
@@ -108,7 +97,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setList(recyclerView: RecyclerView) {
         recyclerView.adapter = object: DataBindingAdapter<Food>(
-            FoodViewModel()
+            viewModel = FoodViewModel()
         ){}.apply {
 
         }
@@ -118,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = DataBindingLoadStateAdapter()
 
         val foodAdapter = object: DataBindingAdapter<Food>(
-            FoodViewModel()
+            viewModel = FoodViewModel()
         ){}.apply {
             submitList(list)
         }
