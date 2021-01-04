@@ -40,16 +40,23 @@ dependencies {
 ```xml
 <layout>    
     <data>
-        <!-- You should to declare for Item -->
-        <variable
-            name="item"
-            type="com.solar.recyclerviewsample.Food" />
-
         <!-- If you wan't to use that you have not to declare -->
         <variable
             name="vm"
             type="com.solar.recyclerviewsample.FoodViewModel" />
     </data>
+  
+    <com.solar.recyclerview.SolarRecyclerView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        bind:loading="@{true}"
+        bind:vm="@{vm}"
+        bind:items="@{vm.foodGridList}"
+        bind:decoration="@{6}"
+        tools:listitem="@layout/item_food_grid">
+    </com.solar.recyclerview.SolarRecyclerView>
 </layout>
 ```
 
@@ -62,13 +69,14 @@ data class Food (
 ) : ItemType
 ```
 
-#### Set Adapter
+#### Set Paging
 ```kotlin
-main_basic_recycler_view.adapter = DataBindingAdapter<Food>(
-            FoodViewModel()
-       ).apply {
-            submitList(foods)
-       }
+bind.listView.onAttachEnd = {
+  Log.d("GridFragment", "onAttachEnd")
+  bind.root.postDelayed({
+    bind.listView.loadMore(FoodFactory.getFoodSample(), isLoading = false)
+  }, 3000)
+}
 ```
 
 <p align="center">
