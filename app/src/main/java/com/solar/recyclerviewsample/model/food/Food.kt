@@ -4,7 +4,7 @@ import com.solar.recyclerviewsample.R
 import com.solar.recyclerviewsample.complex.AbstractComplexModel
 
 data class Food (
-    val title: String,
+    var title: String,
     val subtitle: String,
     val price: String,
     val img: Int,

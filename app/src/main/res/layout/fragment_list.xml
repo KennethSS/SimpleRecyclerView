@@ -2,12 +2,16 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="vm"
-            type="com.solar.recyclerviewsample.FoodViewModel" />
+            type="com.solar.recyclerviewsample.viewmodel.FoodViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.solar.recyclerviewsample.adapter.FoodListAdapter" />
     </data>
 
     <LinearLayout
@@ -15,13 +19,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.solar.recyclerview.SolarRecyclerView
+        <Button
+            android:id="@+id/addall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            bind:vm="@{vm}"
-            bind:items="@{vm.foodList}">
-        </com.solar.recyclerview.SolarRecyclerView>
+            app:adapter="@{adapter}"
+            app:vm="@{vm}"
+            app:loading="@{false}"
+            app:foods="@{vm.foodList}"
+            tools:listitem="@layout/item_food_menu">
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 </layout>

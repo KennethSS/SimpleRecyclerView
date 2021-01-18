@@ -1,18 +1,19 @@
-package com.solar.recyclerviewsample
+package com.solar.recyclerviewsample.viewmodel
 
 import androidx.lifecycle.*
+import com.solar.recyclerview.ViewModelList
 import com.solar.recyclerviewsample.model.food.Food
 import com.solar.recyclerviewsample.model.food.FoodFactory
 import kotlinx.coroutines.Dispatchers
 
-class FoodViewModel : ViewModel() {
+class FoodViewModel : ViewModel(), ViewModelList {
     val toastEvent = MutableLiveData<String>()
 
     private val _foodList: MutableLiveData<Int> = MutableLiveData()
 
     val foodList: LiveData<List<Food>> = _foodList.switchMap {
         liveData(Dispatchers.IO) {
-            emit(FoodFactory.getFoodSample())
+            emit(FoodFactory.getFoodList(5))
         }
     }
 
@@ -26,5 +27,9 @@ class FoodViewModel : ViewModel() {
 
     fun onClick(item: Food) {
         toastEvent.postValue(item.title)
+    }
+
+    override fun fetchList() {
+        _foodList.value = 1
     }
 }

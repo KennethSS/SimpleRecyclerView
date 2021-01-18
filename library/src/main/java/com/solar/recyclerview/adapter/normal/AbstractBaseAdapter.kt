@@ -8,8 +8,10 @@ import com.solar.recyclerview.adapter.holder.ItemType
  *  This is Basic Class for RecyclerView Adapter
  */
 
-abstract class BaseAdapter<T : ItemType, VH: RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
-    open val list: MutableList<T> = mutableListOf()
+abstract class AbstractBaseAdapter<T : ItemType, VH : RecyclerView.ViewHolder> :
+    RecyclerView.Adapter<VH>() {
+
+    open val list: MutableList<T> by lazy { mutableListOf<T>() }
 
     fun add(item: T) {
         list.add(item)
@@ -24,13 +26,11 @@ abstract class BaseAdapter<T : ItemType, VH: RecyclerView.ViewHolder> : Recycler
     }
 
     fun addAll(list: List<T>) {
-        Log.d("GridFragment", "addAll")
-
         val previous = this.list.size
         this.list.addAll(list)
-        Log.d("GridFragment", "${previous}")
-        Log.d("GridFragment", "${this.list.size}")
-        notifyItemRangeChanged(previous, this.list.size)
+        Log.d("addAll", "previous $previous")
+        Log.d("addAll", "listSize ${list.size}")
+        notifyItemRangeInserted(previous, list.size)
     }
 
     fun remove(item: T, isAnim: Boolean = false) {

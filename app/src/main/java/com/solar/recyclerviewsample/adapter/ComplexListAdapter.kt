@@ -1,9 +1,8 @@
-package com.solar.recyclerviewsample.complex
+package com.solar.recyclerviewsample.adapter
 
 import android.os.Parcelable
-import com.solar.recyclerview.adapter.normal.DataBindingAdapter
-import com.solar.recyclerview.adapter.holder.BindingHolder
-import com.solar.recyclerviewsample.databinding.ItemMovieHorizontalBinding
+import com.solar.recyclerview.adapter.normal.AbstractDataBindingAdapter
+import com.solar.recyclerviewsample.complex.AbstractComplexModel
 
 /**
  * Copyright 2020 Kenneth
@@ -21,10 +20,10 @@ import com.solar.recyclerviewsample.databinding.ItemMovieHorizontalBinding
  * limitations under the License.
  *
  **/
-class ComplexListAdapter : DataBindingAdapter<AbstractComplexModel>() {
+class ComplexListAdapter : AbstractDataBindingAdapter<AbstractComplexModel>() {
     private val stateList = hashMapOf<String, Parcelable>()
 
-    override fun onViewRecycled(holder: BindingHolder<AbstractComplexModel>) {
+    /*override fun onViewRecycled(holder: BindingHolder<AbstractComplexModel>) {
         super.onViewRecycled(holder)
         val bind = holder.binding
         if (bind is ItemMovieHorizontalBinding) {
@@ -47,5 +46,5 @@ class ComplexListAdapter : DataBindingAdapter<AbstractComplexModel>() {
                 }
             }
         }
-    }
+    }*/
 }

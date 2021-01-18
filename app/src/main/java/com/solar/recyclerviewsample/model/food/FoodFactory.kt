@@ -33,6 +33,24 @@ object FoodFactory {
         )
     }
 
+    fun getRandomFood(): List<Food> {
+        return listOf(
+            Food("Luttuce combo", "NON-VEG BREAKFAST", getPrice(), R.drawable.item_food_1),
+            Food("Courmet combo", "VEG BREAKFAST", getPrice(), R.drawable.item_food_2),
+            Food("Spaghetti", "VEG BREAKFAST", getPrice(), R.drawable.item_food_3),
+            Food("Fries Combo", "NON-VEG BREAKFAST", getPrice(), R.drawable.item_food_4),
+            Food("Spaghetti combo", "VEG BREAKFAST", getPrice(), R.drawable.item_food_5)
+        )
+    }
+
+    fun getFoodList(size: Int): List<Food> {
+        return List(size) { index ->
+            getRandomFood().random().apply {
+                title = ("$title $index")
+            }
+        }
+    }
+
     fun getFoodGridSample(): List<FoodGrid> {
         return mutableListOf(
             FoodGrid("Luttuce combo 1", "NON-VEG BREAKFAST", getPrice(), R.drawable.item_food_1),

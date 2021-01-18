@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.solar.recyclerview.SolarRecyclerView
-import com.solar.recyclerview.adapter.normal.DataBindingAdapter
+import com.solar.recyclerview.adapter.normal.AbstractDataBindingAdapter
 import com.solar.recyclerview.decoration.SolarItemDecoration
+import com.solar.recyclerviewsample.adapter.FoodListAdapter
+import com.solar.recyclerviewsample.model.food.Food
 import com.solar.recyclerviewsample.model.movie.Movie
 
 @BindingAdapter("clipOutline")
@@ -34,7 +36,7 @@ fun setImageFromUrl(iv: AppCompatImageView, url: String?) {
 @BindingAdapter("submit")
 fun submitRecyclerView(rv: SolarRecyclerView, list: List<Movie>?) {
     list?.let {
-        rv.adapter = object: DataBindingAdapter<Movie>(rv.layoutManager) {}.apply {
+        rv.adapter = object: AbstractDataBindingAdapter<Movie>(rv.layoutManager) {}.apply {
             submitList(list)
             stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         }
@@ -44,4 +46,13 @@ fun submitRecyclerView(rv: SolarRecyclerView, list: List<Movie>?) {
 @BindingAdapter("divider")
 fun setItemDivider(rv: RecyclerView, space: Int) {
     rv.addItemDecoration(SolarItemDecoration(space))
+}
+
+@BindingAdapter("foods")
+fun setFoodListItems(rv: RecyclerView, items: List<Food>?) {
+    items?.let {
+        rv.postDelayed({
+            (rv.adapter as? FoodListAdapter?)?.addAll(it)
+        }, 2000)
+    }
 }

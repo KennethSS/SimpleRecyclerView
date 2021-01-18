@@ -43,7 +43,7 @@ dependencies {
         <!-- If you wan't to use that you have not to declare -->
         <variable
             name="vm"
-            type="com.solar.recyclerviewsample.FoodViewModel" />
+            type="com.solar.recyclerviewsample.viewmodel.FoodViewModel" />
     </data>
   
     <com.solar.recyclerview.SolarRecyclerView

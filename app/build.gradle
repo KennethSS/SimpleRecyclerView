@@ -53,7 +53,7 @@ dependencies {
 
     implementation project(path: ':library')
 
-
+    implementation 'com.github.KennethSS:SolarBinding:1.0.2'
     implementation 'com.arasthel:spannedgridlayoutmanager:3.0.2'
 
     testImplementation 'junit:junit:4.12'

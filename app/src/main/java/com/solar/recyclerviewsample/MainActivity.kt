@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.solar.recyclerview.adapter.*
-import com.solar.recyclerview.adapter.normal.DataBindingAdapter
-import com.solar.recyclerviewsample.complex.ComplexFactory
-import com.solar.recyclerviewsample.complex.ComplexFragment
+import com.solar.recyclerview.adapter.normal.AbstractDataBindingAdapter
+import com.solar.recyclerviewsample.fragment.ComplexFragment
 import com.solar.recyclerviewsample.databinding.FragmentListBinding
+import com.solar.recyclerviewsample.fragment.GridFragment
+import com.solar.recyclerviewsample.fragment.ListFragment
 import com.solar.recyclerviewsample.model.food.Food
-import com.solar.recyclerviewsample.model.food.FoodFactory
+import com.solar.recyclerviewsample.viewmodel.FoodViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -31,9 +32,9 @@ class MainActivity : AppCompatActivity() {
             BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         ) {
             override fun getItem(position: Int): Fragment = when(position) {
-                0 -> GridFragment()
-                1 -> ComplexFragment()
-                2 -> ListFragment()
+                0 -> ListFragment()
+                1 -> GridFragment()
+                2 -> ComplexFragment()
                 3 -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
                 else -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
             }
@@ -96,7 +97,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setList(recyclerView: RecyclerView) {
-        recyclerView.adapter = object: DataBindingAdapter<Food>(
+        recyclerView.adapter = object: AbstractDataBindingAdapter<Food>(
             viewModel = FoodViewModel()
         ){}.apply {
 
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
     private fun setListAndState(recyclerView: RecyclerView, list: List<Food>) {
         val adapter = DataBindingLoadStateAdapter()
 
-        val foodAdapter = object: DataBindingAdapter<Food>(
+        val foodAdapter = object: AbstractDataBindingAdapter<Food>(
             viewModel = FoodViewModel()
         ){}.apply {
             submitList(list)

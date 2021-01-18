@@ -3,9 +3,8 @@ package com.solar.recyclerview
 import android.content.Context
 import android.util.AttributeSet
 import androidx.lifecycle.ViewModel
-import com.solar.recyclerview.adapter.SolarListAdapter
 import com.solar.recyclerview.adapter.holder.ItemType
-import com.solar.recyclerview.listener.LoadMoreScrollListener
+import com.solar.recyclerview.adapter.normal.AbstractLoadingAdapter
 
 /**
  * Copyright 2020 Kenneth
@@ -27,7 +26,7 @@ class SolarRecyclerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AbstractSolarRecyclerView(context, attrs, defStyleAttr) {
 
-    private val controller = RecyclerViewController()
+    private var controller: RecyclerViewController? = null
 
     private val onAttachDestination: (() -> Unit) = {
         onAttachEnd?.invoke()
@@ -38,7 +37,6 @@ class SolarRecyclerView @JvmOverloads constructor(
     init {
         overScrollMode = OVER_SCROLL_NEVER
         clipToPadding = false
-        addOnScrollListener(LoadMoreScrollListener(controller, onAttachDestination))
     }
 
     fun <T : ItemType> loadMore(
@@ -48,15 +46,20 @@ class SolarRecyclerView @JvmOverloads constructor(
     ) {
         post {
             if (adapter != null) {
-                (adapter as SolarListAdapter<T>).addAll(list)
+                (adapter as AbstractLoadingAdapter<ItemType>).addAll(list)
             } else {
-                controller.isLoading = isLoading
-                adapter = SolarListAdapter<ItemType>(
-                    controller,
-                    viewModel = viewModel
-                ).apply {
+                val loadingAdapter = object: AbstractLoadingAdapter<ItemType>(){ }.apply {
                     submitList(list)
                 }
+
+                adapter = loadingAdapter
+                controller = RecyclerViewController(
+                    this,
+                    loadingAdapter,
+                    onAttachDestination = {
+
+                    },
+                    isLoading = isLoading)
             }
         }
     }

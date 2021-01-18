@@ -1,4 +1,4 @@
-package com.solar.recyclerviewsample.complex
+package com.solar.recyclerviewsample.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.solar.recyclerviewsample.R
+import com.solar.recyclerviewsample.adapter.ComplexListAdapter
+import com.solar.recyclerviewsample.complex.ComplexFactory
 import com.solar.recyclerviewsample.databinding.FragmentComplexBinding
-import com.solar.recyclerviewsample.databinding.FragmentGridBinding
 
 /**
  * Copyright 2020 Kenneth

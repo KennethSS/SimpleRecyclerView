@@ -7,7 +7,7 @@
     <data>
         <variable
             name="vm"
-            type="com.solar.recyclerviewsample.FoodViewModel" />
+            type="com.solar.recyclerviewsample.viewmodel.FoodViewModel" />
     </data>
 
     <LinearLayout
@@ -20,11 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            bind:loading="@{true}"
-            bind:vm="@{vm}"
-            bind:items="@{vm.foodGridList}"
-            bind:decoration="@{6}"
             tools:listitem="@layout/item_food_grid">
         </com.solar.recyclerview.SolarRecyclerView>
+        <!--
+        bind:loading="@{true}"
+            bind:vm="@{vm}"
+            bind:items="@{vm.foodGridList}"
+            bind:decoration="@{6}"-->
     </LinearLayout>
 </layout>
