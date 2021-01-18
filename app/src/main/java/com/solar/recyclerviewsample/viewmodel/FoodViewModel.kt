@@ -11,9 +11,14 @@ class FoodViewModel : ViewModel(), ViewModelList {
 
     private val _foodList: MutableLiveData<Int> = MutableLiveData()
 
+    private val totalList = arrayListOf<Food>()
+
     val foodList: LiveData<List<Food>> = _foodList.switchMap {
         liveData(Dispatchers.IO) {
-            emit(FoodFactory.getFoodList(5))
+            val foods = FoodFactory.getFoodList(5)
+            totalList.addAll(foods)
+            //emit(totalList.toList())
+            emit(foods)
         }
     }
 

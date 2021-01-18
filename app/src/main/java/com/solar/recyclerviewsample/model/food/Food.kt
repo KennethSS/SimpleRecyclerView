@@ -8,5 +8,6 @@ data class Food (
     val subtitle: String,
     val price: String,
     val img: Int,
+    var id: Int = 0,
     override val layoutRes: Int = R.layout.item_food_menu
 ) : AbstractComplexModel()

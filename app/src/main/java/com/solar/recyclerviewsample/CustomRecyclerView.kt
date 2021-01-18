@@ -3,7 +3,7 @@ package com.solar.recyclerviewsample
 import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.RecyclerView
-import com.solar.recyclerviewsample.adapter.FoodListAdapter
+import com.solar.recyclerviewsample.adapter.FoodBindingAdapter
 
 /**
  * Copyright 2020 Kenneth
@@ -26,6 +26,6 @@ class CustomRecyclerView @JvmOverloads constructor(
 
 ) : RecyclerView(context, attrs, defStyleAttr) {
     init {
-        adapter = FoodListAdapter()
+        adapter = FoodBindingAdapter()
     }
 }

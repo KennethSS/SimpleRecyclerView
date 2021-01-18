@@ -2,6 +2,7 @@ package com.solar.recyclerviewsample.model.food
 
 import com.solar.recyclerviewsample.FoodGrid
 import com.solar.recyclerviewsample.R
+import kotlin.random.Random
 
 object FoodFactory {
     fun getFoodSample(): List<Food> {
@@ -35,20 +36,17 @@ object FoodFactory {
 
     fun getRandomFood(): List<Food> {
         return listOf(
-            Food("Luttuce combo", "NON-VEG BREAKFAST", getPrice(), R.drawable.item_food_1),
-            Food("Courmet combo", "VEG BREAKFAST", getPrice(), R.drawable.item_food_2),
-            Food("Spaghetti", "VEG BREAKFAST", getPrice(), R.drawable.item_food_3),
-            Food("Fries Combo", "NON-VEG BREAKFAST", getPrice(), R.drawable.item_food_4),
-            Food("Spaghetti combo", "VEG BREAKFAST", getPrice(), R.drawable.item_food_5)
+            Food("Luttuce combo", "NON-VEG BREAKFAST", getPrice(), R.drawable.item_food_1, id = 0),
+            Food("Courmet combo", "VEG BREAKFAST", getPrice(), R.drawable.item_food_2, id = 1),
+            Food("Spaghetti", "VEG BREAKFAST", getPrice(), R.drawable.item_food_3, id = 2),
+            Food("Fries Combo", "NON-VEG BREAKFAST", getPrice(), R.drawable.item_food_4, id = 3),
+            Food("Spaghetti combo", "VEG BREAKFAST", getPrice(), R.drawable.item_food_5, id = 4)
         )
     }
 
     fun getFoodList(size: Int): List<Food> {
-        return List(size) { index ->
-            getRandomFood().random().apply {
-                title = ("$title $index")
-            }
-        }
+        val random = Random.nextInt()
+        return getRandomFood().shuffled()
     }
 
     fun getFoodGridSample(): List<FoodGrid> {

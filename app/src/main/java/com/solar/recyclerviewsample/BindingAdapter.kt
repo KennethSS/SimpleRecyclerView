@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.solar.recyclerview.SolarRecyclerView
 import com.solar.recyclerview.adapter.normal.AbstractDataBindingAdapter
 import com.solar.recyclerview.decoration.SolarItemDecoration
+import com.solar.recyclerviewsample.adapter.FoodBindingAdapter
 import com.solar.recyclerviewsample.adapter.FoodListAdapter
 import com.solar.recyclerviewsample.model.food.Food
 import com.solar.recyclerviewsample.model.movie.Movie
@@ -51,8 +52,7 @@ fun setItemDivider(rv: RecyclerView, space: Int) {
 @BindingAdapter("foods")
 fun setFoodListItems(rv: RecyclerView, items: List<Food>?) {
     items?.let {
-        rv.postDelayed({
-            (rv.adapter as? FoodListAdapter?)?.addAll(it)
-        }, 2000)
+        (rv.adapter as? FoodListAdapter?)?.submitList(items)
+        rv.postDelayed({ }, 2000)
     }
 }

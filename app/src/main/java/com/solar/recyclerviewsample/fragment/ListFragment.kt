@@ -2,14 +2,14 @@ package com.solar.recyclerviewsample.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.solar.library.binding.fragment.BindingFragment
 import com.solar.recyclerviewsample.R
+import com.solar.recyclerviewsample.adapter.FoodBindingAdapter
 import com.solar.recyclerviewsample.adapter.FoodListAdapter
 import com.solar.recyclerviewsample.databinding.FragmentListBinding
 import com.solar.recyclerviewsample.model.food.FoodFactory
 import com.solar.recyclerviewsample.viewmodel.FoodViewModel
-import kotlinx.android.synthetic.*
 
 /**
  *  Created by Kenneth on 12/16/20
@@ -24,7 +24,9 @@ class ListFragment : BindingFragment<FragmentListBinding>() {
         with(bind) {
             lifecycleOwner = viewLifecycleOwner
             vm = foodViewModel.also { it.fetchList() }
-            adapter = FoodListAdapter()
+            adapter = FoodListAdapter().apply {
+                stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            }
         }
 
         // Performance Options
@@ -33,21 +35,11 @@ class ListFragment : BindingFragment<FragmentListBinding>() {
             //setItemViewCacheSize(4) // onBindViewHolder 를 다시 실행하지 않고 재활용할 ViewCache 크기
         }
 
-        /*bind.listView.addOnScrollListener(LoadMoreScrollListener({
-            Log.d("ListFragment", "EndScroll")
-            bind.root.postDelayed({
-                foodViewModel.getMoreFoodList()
-            }, 3000)
-        }))*/
-
-        /*bind.root.postDelayed({
-            (bind.listView.adapter as FoodListAdapter).submitList(FoodFactory.getFoodSample())
-        }, 1000)*/
-
-        (bind.listView.layoutManager as LinearLayoutManager).isItemPrefetchEnabled
+        // (bind.listView.layoutManager as LinearLayoutManager).isItemPrefetchEnabled is Default true
 
         bind.addall.setOnClickListener {
-            (bind.listView.adapter as FoodListAdapter).addAll(FoodFactory.getFoodList(1))
+            foodViewModel.fetchList()
+            //(bind.listView.adapter as FoodBindingAdapter).addAll(FoodFactory.getFoodList(1))
         }
     }
 }

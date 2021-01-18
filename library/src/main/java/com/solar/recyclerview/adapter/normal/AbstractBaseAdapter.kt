@@ -11,7 +11,7 @@ import com.solar.recyclerview.adapter.holder.ItemType
 abstract class AbstractBaseAdapter<T : ItemType, VH : RecyclerView.ViewHolder> :
     RecyclerView.Adapter<VH>() {
 
-    open val list: MutableList<T> by lazy { mutableListOf<T>() }
+    protected open val list: MutableList<T> by lazy { mutableListOf<T>() }
 
     fun add(item: T) {
         list.add(item)
