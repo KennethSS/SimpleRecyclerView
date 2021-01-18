@@ -1,24 +1,33 @@
 package com.solar.recyclerview
 
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.solar.recyclerview.decoration.SolarItemDecoration
-import com.solar.recyclerview.adapter.holder.ItemType
+import com.solar.recyclerview.adapter.normal.AbstractLoadingAdapter
 
 /**
  *  Created by Kenneth on 12/29/20
  */
-@BindingAdapter("bind:loading", "bind:vm", "bind:items", requireAll = false)
-fun initSolarRecyclerView(
-    rv: SolarRecyclerView,
-    loading: Boolean,
-    vm: ViewModel?,
-    items: List<ItemType>?
-) {
-    items?.let {
-        rv.loadMore(items, vm, loading)
-    } ?: rv.loadMore(listOf(), vm, loading)
+@BindingAdapter(
+    "adapter",
+    "vm",
+    "loading",
+    requireAll = false)
+fun setItems(rv: RecyclerView,
+             adapter: RecyclerView.Adapter<*>,
+             vm: ViewModelList,
+             loading: Boolean = true) {
+    RecyclerViewController(
+        rv,
+        adapter = adapter,
+        onAttachDestination = { vm.fetchList() },
+        isLoading = loading,
+        isAttachedThreshold = false).also {
+
+        if (adapter is AbstractLoadingAdapter<*>) {
+            adapter.controller = it
+        }
+    }
 }
 
 @BindingAdapter("bind:decoration")
