@@ -18,6 +18,7 @@ import com.solar.recyclerviewsample.fragment.ListFragment
 import com.solar.recyclerviewsample.model.food.Food
 import com.solar.recyclerviewsample.viewmodel.FoodViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,13 +33,19 @@ class MainActivity : AppCompatActivity() {
             BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         ) {
             override fun getItem(position: Int): Fragment = when(position) {
-                0 -> ListFragment()
+                0 -> ComplexFragment()
                 1 -> GridFragment()
-                2 -> ComplexFragment()
+                2 -> ListFragment()
                 3 -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
                 else -> NormalFragment.newInstance<FragmentListBinding, FoodViewModel>(R.layout.fragment_list, FoodViewModel::class.java)
             }
             override fun getCount(): Int = 1
+        }
+
+        val let = ArrayList<String>()
+        arrayListOf<String>()
+        listOf<String>("").also {
+            it
         }
 
         /*main_basic_recycler_view.also {
@@ -97,17 +104,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setList(recyclerView: RecyclerView) {
-        recyclerView.adapter = object: AbstractDataBindingAdapter<Food>(
+        /*recyclerView.adapter = object: AbstractDataBindingAdapter<Food>(
+
             viewModel = FoodViewModel()
         ){}.apply {
 
-        }
+        }*/
     }
 
     private fun setListAndState(recyclerView: RecyclerView, list: List<Food>) {
         val adapter = DataBindingLoadStateAdapter()
 
-        val foodAdapter = object: AbstractDataBindingAdapter<Food>(
+        /*val foodAdapter = object: AbstractDataBindingAdapter<Food>(
             viewModel = FoodViewModel()
         ){}.apply {
             submitList(list)
@@ -131,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                     }, 1000)
                 }
             }
-        })
+        })*/
     }
 
     private class DiffCallback : DiffUtil.ItemCallback<Food>() {

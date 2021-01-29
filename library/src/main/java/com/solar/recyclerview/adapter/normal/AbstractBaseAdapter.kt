@@ -1,42 +1,39 @@
 package com.solar.recyclerview.adapter.normal
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
+import com.solar.recyclerview.ViewModelList
 import com.solar.recyclerview.adapter.holder.ItemType
 
 /**
  *  This is Basic Class for RecyclerView Adapter
  */
 
-abstract class AbstractBaseAdapter<T : ItemType, VH : RecyclerView.ViewHolder> :
-    RecyclerView.Adapter<VH>() {
-
-    protected open val list: MutableList<T> by lazy { mutableListOf<T>() }
+abstract class AbstractBaseAdapter<T : ItemType, VH : RecyclerView.ViewHolder>(
+    private val viewModelList: ViewModelList<T>
+) : RecyclerView.Adapter<VH>() {
 
     fun add(item: T) {
-        list.add(item)
+        viewModelList.list.value?.add(item)
         notifyItemInserted(itemCount)
     }
 
     fun addAt(index: Int, item: T) {
-        if (index < list.size) {
-            list.add(index, item)
+        if (index < viewModelList.list.value?.size ?: 0) {
+            viewModelList.list.value?.add(index, item)
             notifyItemInserted(index)
         }
     }
 
     fun addAll(list: List<T>) {
-        val previous = this.list.size
-        this.list.addAll(list)
-        Log.d("addAll", "previous $previous")
-        Log.d("addAll", "listSize ${list.size}")
+        val previous = viewModelList.list.value?.size ?: 0
+        viewModelList.list.value?.addAll(list)
         notifyItemRangeInserted(previous, list.size)
     }
 
     fun remove(item: T, isAnim: Boolean = false) {
-        val index = list.indexOf(item)
+        val index = viewModelList.list.value?.indexOf(item) ?: 0
         if (index != -1) {
-            list.removeAt(index)
+            viewModelList.list.value?.removeAt(index)
 
             if (isAnim) notifyItemRangeRemoved(index, 1)
             else notifyDataSetChanged()
@@ -44,32 +41,23 @@ abstract class AbstractBaseAdapter<T : ItemType, VH : RecyclerView.ViewHolder> :
     }
 
     fun removeAt(position: Int, isAnim: Boolean = false) {
-        if (position < list.size) {
-            list.removeAt(position)
+        if (position < viewModelList.list.value?.size ?: 0) {
+            viewModelList.list.value?.removeAt(position)
 
             if (isAnim) notifyItemRangeRemoved(position, 1)
             else notifyDataSetChanged()
         }
     }
 
-    fun update(index: Int, item: T) {
-        if (index < list.size) {
-            list[index] = item
-            notifyItemChanged(index)
-        }
-    }
-
     fun submitList(list: List<T>) {
-        this.list.run {
+        viewModelList.list.value?.run {
             clear()
             addAll(list)
         }
         notifyDataSetChanged()
     }
 
-    fun getItem(index: Int): T = list[index]
+    override fun getItemCount(): Int = viewModelList.list.value?.size ?: 0
 
-    override fun getItemCount(): Int = list.size
-
-    override fun getItemViewType(position: Int): Int = list[position].layoutRes
+    override fun getItemViewType(position: Int): Int = viewModelList.list.value?.get(position)?.layoutRes ?: 0
 }

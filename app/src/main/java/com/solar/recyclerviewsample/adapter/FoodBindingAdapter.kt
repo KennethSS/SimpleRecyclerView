@@ -3,16 +3,17 @@ package com.solar.recyclerviewsample.adapter
 import androidx.recyclerview.widget.DiffUtil
 import com.solar.recyclerview.adapter.normal.AbstractLoadingAdapter
 import com.solar.recyclerviewsample.model.food.Food
+import com.solar.recyclerviewsample.viewmodel.FoodViewModel
 
 /**
  *  Created by Kenneth on 12/29/20
  */
-class FoodBindingAdapter : AbstractLoadingAdapter<Food>() {
+class FoodBindingAdapter : AbstractLoadingAdapter<Food>(FoodViewModel()) {
 
     fun updateList(newList: List<Food>) {
-        val result = DiffUtil.calculateDiff(FoodDiffUtil(list, newList))
+        /*val result = DiffUtil.calculateDiff(FoodDiffUtil(list, newList))
         list.addAll(newList)
-        result.dispatchUpdatesTo(this)
+        result.dispatchUpdatesTo(this)*/
     }
 
     inner class FoodDiffUtil(

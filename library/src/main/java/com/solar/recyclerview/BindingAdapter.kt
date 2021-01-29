@@ -1,6 +1,7 @@
 package com.solar.recyclerview
 
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.solar.recyclerview.decoration.SolarItemDecoration
 import com.solar.recyclerview.adapter.normal.AbstractLoadingAdapter
@@ -15,12 +16,12 @@ import com.solar.recyclerview.adapter.normal.AbstractLoadingAdapter
     requireAll = false)
 fun setItems(rv: RecyclerView,
              adapter: RecyclerView.Adapter<*>,
-             vm: ViewModelList,
+             vm: ViewModel,
              loading: Boolean = true) {
     RecyclerViewController(
         rv,
         adapter = adapter,
-        onAttachDestination = { vm.fetchList() },
+        onAttachDestination = { }, //vm.fetchList() },
         isLoading = loading,
         isAttachedThreshold = false).also {
 

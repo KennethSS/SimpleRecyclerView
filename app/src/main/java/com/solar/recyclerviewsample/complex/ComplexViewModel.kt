@@ -1,13 +1,11 @@
-package com.solar.recyclerviewsample.adapter
+package com.solar.recyclerviewsample.complex
 
-import android.os.Parcelable
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
+import android.view.View
+import androidx.lifecycle.*
 import com.solar.recyclerview.ViewModelList
-import com.solar.recyclerview.adapter.normal.AbstractDataBindingAdapter
-import com.solar.recyclerviewsample.complex.AbstractComplexModel
 import com.solar.recyclerviewsample.model.food.Food
-import com.solar.recyclerviewsample.viewmodel.FoodViewModel
+import com.solar.recyclerviewsample.model.food.FoodFactory
+import kotlinx.coroutines.Dispatchers
 
 /**
  * Copyright 2020 Kenneth
@@ -25,14 +23,23 @@ import com.solar.recyclerviewsample.viewmodel.FoodViewModel
  * limitations under the License.
  *
  **/
-class ComplexListAdapter(viewModelList: ViewModelList<Food>, lifecycleOwner: LifecycleOwner)
-    : AbstractDataBindingAdapter<Food>(viewModelList) {
+class ComplexViewModel : ViewModel(), ViewModelList<Food> {
+
+    private val _list = MutableLiveData<Int>()
+    override val list: LiveData<ArrayList<Food>>
 
     init {
-        viewModelList.list.observe(lifecycleOwner, Observer {
-            notifyDataSetChanged()
-        })
+        list = _list.switchMap {
+            liveData(Dispatchers.IO) {
+                val foods = FoodFactory.getFoodList(5)
+                val array = arrayListOf<Food>()
+                array.addAll(foods)
+                emit(array)
+            }
+        }
     }
 
-    //private val stateList = hashMapOf<String, Parcelable>()
+    fun getList() {
+        _list.value = 0
+    }
 }

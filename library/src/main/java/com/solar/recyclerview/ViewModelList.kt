@@ -1,5 +1,8 @@
 package com.solar.recyclerview
 
-interface ViewModelList {
-    fun fetchList()
+import androidx.lifecycle.LiveData
+import com.solar.recyclerview.adapter.holder.ItemType
+
+interface ViewModelList<T: ItemType> {
+    val list: LiveData<ArrayList<T>>
 }

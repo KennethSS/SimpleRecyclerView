@@ -48,7 +48,7 @@ class SolarRecyclerView @JvmOverloads constructor(
             if (adapter != null) {
                 (adapter as AbstractLoadingAdapter<ItemType>).addAll(list)
             } else {
-                val loadingAdapter = object: AbstractLoadingAdapter<ItemType>(){ }.apply {
+                /*val loadingAdapter = object: AbstractLoadingAdapter<ItemType>(){ }.apply {
                     submitList(list)
                 }
 
@@ -59,7 +59,7 @@ class SolarRecyclerView @JvmOverloads constructor(
                     onAttachDestination = {
 
                     },
-                    isLoading = isLoading)
+                    isLoading = isLoading)*/
             }
         }
     }

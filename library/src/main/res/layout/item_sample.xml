@@ -64,10 +64,5 @@
             app:layout_constraintBottom_toBottomOf="@id/item_food_img"
             app:layout_constraintStart_toStartOf="@id/item_food_title"
             tools:text="Luttuce combo" />
-
-        <com.solar.recyclerview.SolarRecyclerView
-            android:id="@+id/movie_list_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
     </FrameLayout>
 </layout>

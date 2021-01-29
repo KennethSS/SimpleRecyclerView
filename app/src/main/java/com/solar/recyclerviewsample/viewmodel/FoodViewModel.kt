@@ -1,12 +1,15 @@
 package com.solar.recyclerviewsample.viewmodel
 
+import android.view.View
 import androidx.lifecycle.*
 import com.solar.recyclerview.ViewModelList
 import com.solar.recyclerviewsample.model.food.Food
 import com.solar.recyclerviewsample.model.food.FoodFactory
 import kotlinx.coroutines.Dispatchers
 
-class FoodViewModel : ViewModel(), ViewModelList {
+class FoodViewModel : ViewModel(), ViewModelList<Food> {
+    override val list: LiveData<ArrayList<Food>> = MutableLiveData()
+
     val toastEvent = MutableLiveData<String>()
 
     private val _foodList: MutableLiveData<Int> = MutableLiveData()
@@ -27,14 +30,14 @@ class FoodViewModel : ViewModel(), ViewModelList {
     }
 
     fun getMoreFoodList() {
-        _foodList.value = 1
+
     }
 
     fun onClick(item: Food) {
         toastEvent.postValue(item.title)
     }
 
-    override fun fetchList() {
+    fun fetchList() {
         _foodList.value = 1
     }
 }

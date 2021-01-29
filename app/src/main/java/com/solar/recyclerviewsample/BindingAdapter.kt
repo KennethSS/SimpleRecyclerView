@@ -37,10 +37,10 @@ fun setImageFromUrl(iv: AppCompatImageView, url: String?) {
 @BindingAdapter("submit")
 fun submitRecyclerView(rv: SolarRecyclerView, list: List<Movie>?) {
     list?.let {
-        rv.adapter = object: AbstractDataBindingAdapter<Movie>(rv.layoutManager) {}.apply {
+        /*rv.adapter = object: AbstractDataBindingAdapter<Movie>(rv.layoutManager) {}.apply {
             submitList(list)
             stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        }
+        }*/
     }
 }
 

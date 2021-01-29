@@ -7,10 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.solar.library.binding.fragment.BindingFragment
 import com.solar.recyclerviewsample.R
 import com.solar.recyclerviewsample.adapter.ComplexListAdapter
 import com.solar.recyclerviewsample.complex.ComplexFactory
+import com.solar.recyclerviewsample.complex.ComplexViewModel
 import com.solar.recyclerviewsample.databinding.FragmentComplexBinding
+import com.solar.recyclerviewsample.viewmodel.FoodViewModel
+import kotlinx.coroutines.delay
 
 /**
  * Copyright 2020 Kenneth
@@ -28,23 +34,21 @@ import com.solar.recyclerviewsample.databinding.FragmentComplexBinding
  * limitations under the License.
  *
  **/
-class ComplexFragment : Fragment() {
-    lateinit var bind : FragmentComplexBinding
+class ComplexFragment : BindingFragment<FragmentComplexBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        bind = DataBindingUtil.inflate(inflater, R.layout.fragment_complex, container, false)
-        bind.lifecycleOwner = viewLifecycleOwner
+    private val complexViewModel: ComplexViewModel by viewModels()
 
-        bind.solarRecyclerView.adapter = ComplexListAdapter().apply {
-            submitList(ComplexFactory.getComplexList())
+    override val layoutRes: Int = R.layout.fragment_complex
+
+    override fun onViewCreated(bind: FragmentComplexBinding, savedInstanceState: Bundle?) {
+        with(bind) {
+            solarRecyclerView.adapter = ComplexListAdapter(complexViewModel, viewLifecycleOwner)
+
+            List(5) {
+                bind.root.postDelayed({
+                    complexViewModel.getList()
+                }, 1000 * it.toLong())
+            }
         }
-
-        Log.d("ComplexFragment", "ChildCount: ${bind.solarRecyclerView.childCount}")
-
-        return bind.root
     }
 }
